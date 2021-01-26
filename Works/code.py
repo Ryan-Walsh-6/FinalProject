@@ -45,7 +45,7 @@ def game_scene():
    background = stage.Grid(image_bank_bankground, 10,8)
    
    # a sprite that will be updated every frame
-   for snake_number in range(20):
+   for snake_number in range(50):
        a_single_snake = stage.Sprite(image_bank_sprites, 11,
                                      constants.OFF_SCREEN_X,
                                      constants.OFF_SCREEN_Y)
@@ -78,7 +78,7 @@ def game_scene():
    wormCoords = [{'x': snakes[0].x , 'y': snakes[0].y}]
    newHead = {'x':snakes[0].x, 'y' :snakes[0].y}
    HEAD = 0       
-   
+   score = 0 
 # repeat forever, game loop
    while True:
        # get user input
@@ -133,7 +133,7 @@ def game_scene():
                            sound.stop()
                            sound.play(apple_crunch)
                         # you hit an alien
-
+                           score = score + 1
                            apples[apple_number].move(constants.OFF_SCREEN_X,
                                                   constants.OFF_SCREEN_Y)
                            show_apple()
@@ -175,11 +175,23 @@ def game_scene():
            x= coords['x']
            y= coords['y']
            show_snake(x,y)
+
+ #      for snake_number in range (len(snakes)):
+ #          if snakes[snake_number].x > 0:
+       if snakes[HEAD].x > (constants.SCREEN_X - constants.SNAKE_SIZE):
+           game_over_scene(score)
+       if snakes[HEAD].x  < 0:
+           game_over_scene(score)
+       if snakes[HEAD].y <  0:
+           game_over_scene(score)
+       if snakes[HEAD].y > (constants.SCREEN_Y):
+           game_over_scene(score)
+           
        # redraw Sprite
        game.render_sprites(snakes + apples)
        game.tick() # wait until refresh rate finishes
 
-def game_over_scene():
+def game_over_scene(final_score):
     # this function is the game over scene
            
    # turn off sound from last scene
@@ -187,14 +199,31 @@ def game_over_scene():
    sound.stop()
            
    # image banks for Circuitpython
-   image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
+   image_bank_2 = stage.Bank.from_bmp16("PyBadge_bank_color_template.bmp")
            
    # sets the background to image 0 in the image bank
    background = stage.Grid(image_bank_2, constants.SCREEN_GRID_X,
                                     constants.SCREEN_GRID_Y)
             
    # add text objects
- 
+   text = []
+   text1 = stage.Text(width=29, height=14, font=None,
+   palette=constants.BLUE_PALETTE, buffer=None)
+   text1.move(22,20)
+   text1.text("Final Score: {:0>2d}".format(final_score))
+   text.append(text1)
+           
+   text2 = stage.Text(width=29, height=14, font=None, 
+                      palette=constants.BLUE_PALETTE, buffer=None) 
+   text2.move(43,60)
+   text2.text("GAME OVER")
+   text.append(text2)
+           
+   text3 = stage.Text(width=29, height=14, font=None, 
+                      palette=constants.BLUE_PALETTE, buffer=None)
+   text3.move(32,110)
+   text3.text("PRESS SELECT")
+   text.append(text3)
    # create a stage for the background to show up on
    #     ad set the frame rate to 60fps
    game = stage.Stage(ugame.display, constants.FPS)
