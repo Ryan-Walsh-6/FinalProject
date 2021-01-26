@@ -143,6 +143,7 @@ def game_scene():
                break
    
    apple_crunch = open("apple_crunch.wav", 'rb')
+ #  endgame = open("endgame.wav", 'rb')
    sound = ugame.audio
    sound.stop()
    sound.mute(False)
@@ -169,9 +170,7 @@ def game_scene():
    # a sprite that will be updated every frame
    snakes = []
    for snake_number in range(50):
-       a_single_snake = stage.Sprite(image_bank_sprites, 11,
-                                     constants.OFF_SCREEN_X,
-                                     constants.OFF_SCREEN_Y)
+       a_single_snake = stage.Sprite(image_bank_sprites, 11, constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
        snakes.append(a_single_snake)
    #place 1 alien on the screen
    x = 75
@@ -302,12 +301,20 @@ def game_scene():
  #      for snake_number in range (len(snakes)):
  #          if snakes[snake_number].x > 0:
        if snakes[HEAD].x > (constants.SCREEN_X - constants.SNAKE_SIZE):
+           sound.stop()
+ #          sound.play(endgame)
            game_over_scene(score)
        if snakes[HEAD].x  < 0:
+           sound.stop()
+ #          sound.play(endgame)
            game_over_scene(score)
        if snakes[HEAD].y <  0:
+           sound.stop()
+ #          sound.play(endgame)
            game_over_scene(score)
        if snakes[HEAD].y > (constants.SCREEN_Y):
+           sound.stop()
+ #          sound.play(endgame)
            game_over_scene(score)
        
        for snake_number in range (1,len(snakes)):
@@ -320,6 +327,8 @@ def game_scene():
                                         snakes[snake_number].y,
                                         snakes[snake_number].x + 15,
                                         snakes[snake_number].y + 15):
+                           sound.stop()
+ #                          sound.play(endgame)
                            game_over_scene(score)
                            
        # redraw Sprite
