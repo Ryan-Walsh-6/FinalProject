@@ -10,7 +10,7 @@ import random
 import time
 
 import constants
-HEAD = 0
+
 def game_scene():
    def show_apple():
         # this function takes an alien from off screen and moves it on screen
@@ -77,7 +77,7 @@ def game_scene():
    down_button = "button_up"
    wormCoords = [{'x': snakes[0].x , 'y': snakes[0].y}]
    newHead = {'x':snakes[0].x, 'y' :snakes[0].y}
-       
+   HEAD = 0       
    
 # repeat forever, game loop
    while True:
@@ -117,52 +117,7 @@ def game_scene():
            pass
        if keys & ugame.K_SELECT:
            pass
-       if right_button == "button_pressed" :
-           newHead = {'x':snakes[0].x +16, 'y' :snakes[0].y}
-           wormCoords.insert(0,newHead)
-           del wormCoords[-1]
-           for snake_number in range (len(snakes)):
-               if snakes[snake_number].x > 0:
-                   snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                     constants.OFF_SCREEN_Y)
-                   
-       if left_button == "button_pressed" :
-           newHead = {'x':snakes[0].x - 16, 'y' :snakes[0].y}
-           wormCoords.insert(0,newHead)
-           del wormCoords[-1]
-           for snake_number in range (len(snakes)):
-               if snakes[snake_number].x > 0:
-                   snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                     constants.OFF_SCREEN_Y)
-        
-       if up_button == "button_pressed" :
-           newHead = {'x':snakes[0].x, 'y' :snakes[0].y - 16}
-           wormCoords.insert(0,newHead)
-           del wormCoords[-1]
-           for snake_number in range (len(snakes)):
-               if snakes[snake_number].x > 0:
-                   snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                     constants.OFF_SCREEN_Y)
-                  
-       if down_button == "button_pressed" :
-           newHead = {'x':snakes[0].x, 'y' :snakes[0].y + 16}
-           wormCoords.insert(0,newHead)
-           del wormCoords[-1]
-           for snake_number in range (len(snakes)):
-              if snakes[snake_number].x > 0:
-                       snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                     constants.OFF_SCREEN_Y)
-       
-
-                   
- 
-                    
-       for coords in wormCoords:
-           x= coords['x']
-           y= coords['y']
-           show_snake(x,y)
-           
-           
+      
        for snake_number in range(1):
            if snakes[snake_number].x > 0:
                for apple_number in range(len(apples)):
@@ -185,37 +140,37 @@ def game_scene():
                            if right_button == "button_pressed" :
                                newHead = {'x':snakes[0].x +16, 'y' :snakes[0].y}
                                wormCoords.insert(0,newHead)
-#                               del wormCoords[-1]
-                               for snake_number in range (len(snakes)):
-                                   if snakes[snake_number].x > 0:
-                                       snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                               constants.OFF_SCREEN_Y)
                            elif left_button == "button_pressed" :
                                newHead = {'x':snakes[0].x - 16, 'y' :snakes[0].y}
                                wormCoords.insert(0,newHead)
-#                               del wormCoords[-1]
-                               for snake_number in range (len(snakes)):
-                                   if snakes[snake_number].x > 0:
-                                        snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                                  constants.OFF_SCREEN_Y)
                            elif up_button == "button_pressed" :
                                newHead = {'x':snakes[0].x, 'y' :snakes[0].y - 16}
                                wormCoords.insert(0,newHead)
-#                               del wormCoords[-1]
-                               for snake_number in range (len(snakes)):
-                                   if snakes[snake_number].x > 0:
-                                        snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                                  constants.OFF_SCREEN_Y)
                            elif down_button == "button_pressed" :
                                newHead = {'x':snakes[0].x, 'y' :snakes[0].y + 16}
                                wormCoords.insert(0,newHead)
-#                               del wormCoords[-1]
-                               for snake_number in range (len(snakes)):
-                                   if snakes[snake_number].x > 0:
-                                        snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                          constants.OFF_SCREEN_Y)
-#           else:        
-#               del wormCoords[-1]   
+                       else:        
+                           if right_button == "button_pressed" :
+                               newHead = {'x':snakes[0].x +16, 'y' :snakes[0].y}
+                               wormCoords.insert(0,newHead)
+                               del wormCoords[-1]
+                           elif left_button == "button_pressed" :
+                               newHead = {'x':snakes[0].x - 16, 'y' :snakes[0].y}
+                               wormCoords.insert(0,newHead)
+                               del wormCoords[-1]
+                           elif up_button == "button_pressed" :
+                               newHead = {'x':snakes[0].x, 'y' :snakes[0].y - 16}
+                               wormCoords.insert(0,newHead)
+                               del wormCoords[-1]
+                           elif down_button == "button_pressed" :
+                               newHead = {'x':snakes[0].x, 'y' :snakes[0].y + 16}
+                               wormCoords.insert(0,newHead)
+                               del wormCoords[-1]
+       
+       for snake_number in range (len(snakes)):
+           if snakes[snake_number].x > 0:
+               snakes[snake_number].move(constants.OFF_SCREEN_X,
+                                               constants.OFF_SCREEN_Y)
        for coords in wormCoords:
            x= coords['x']
            y= coords['y']
