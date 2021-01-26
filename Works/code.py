@@ -135,6 +135,13 @@ def game_scene():
                2*constants.SNAKE_SIZE)))
                break
     
+   def show_snake(x , y):
+        # this function takes a snake from off screen and moves it on screen
+       for snake_number in range(len(snakes)):
+           if snakes[snake_number].x < 0:
+               snakes[snake_number].move(x,y)
+               break
+   
    apple_crunch = open("apple_crunch.wav", 'rb')
    sound = ugame.audio
    sound.stop()
@@ -148,13 +155,8 @@ def game_scene():
    score_text.move(1,1)
    score_text.text("Score: {0}".format(score))
     # this function is the main game game_scene
-   snakes = []
-   def show_snake(x , y):
-        # this function takes an alien from off screen and moves it on screen
-       for snake_number in range(len(snakes)):
-           if snakes[snake_number].x < 0:
-               snakes[snake_number].move(x,y)
-               break
+   
+ 
 
    # image banks for CircuitPython
    image_bank_bankground = stage.Bank.from_bmp16("ball.bmp")
@@ -165,6 +167,7 @@ def game_scene():
    background = stage.Grid(image_bank_bankground, 10,8)
    
    # a sprite that will be updated every frame
+   snakes = []
    for snake_number in range(50):
        a_single_snake = stage.Sprite(image_bank_sprites, 11,
                                      constants.OFF_SCREEN_X,
@@ -186,7 +189,7 @@ def game_scene():
    #   and set the frame rate for 60fps
    game = stage.Stage(ugame.display, 5)
    # set layers of all sprites, items show up in order
-   game.layers = snakes + apples + [background]
+   game.layers = [score_text] + snakes + apples + [background]
    # render all sprites
    #   most likely you will only render the background once per game scene
    game.render_block()
@@ -306,7 +309,19 @@ def game_scene():
            game_over_scene(score)
        if snakes[HEAD].y > (constants.SCREEN_Y):
            game_over_scene(score)
-           
+       
+       for snake_number in range (1,len(snakes)):
+           if snakes[snake_number].x > 0:
+                       if stage.collide(snakes[HEAD].x , 
+                                        snakes[HEAD].y,
+                                        snakes[HEAD].x + 15,
+                                        snakes[HEAD].y + 15,
+                                        snakes[snake_number].x ,
+                                        snakes[snake_number].y,
+                                        snakes[snake_number].x + 15,
+                                        snakes[snake_number].y + 15):
+                           game_over_scene(score)
+                           
        # redraw Sprite
        game.render_sprites(snakes + apples)
        game.tick() # wait until refresh rate finishes
