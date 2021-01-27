@@ -519,7 +519,7 @@ def you_lost_scene(score):
    game_over_scene(score)
 
 def game_over_scene(final_score):
-     # this function is the game over scene
+    # this function is the game over scene
            
    # turn off sound from last scene
    sound = ugame.audio
