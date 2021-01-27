@@ -448,7 +448,7 @@ def game_scene():
                            neopixels.show()
                            time.sleep(2.0)
                            you_lost_scene(score)
-       if score == 50:
+       if score == 25:
            neopixels[0] = (0, 10, 0)
            neopixels[1] = (0, 10, 0)
            neopixels[2] = (0, 10, 0)
@@ -504,7 +504,7 @@ def you_lost_scene(score):
    text1 = stage.Text(width=29, height=14, font=None,
    palette=constants.BLUE_PALETTE, buffer=None)
    text1.move(43,60)
-   text1.text("YOU LOST:(")
+   text1.text("YOU LOSE : (")
    text.append(text1)
 
    # create a stage for the background to show up on
