@@ -126,10 +126,10 @@ def game_scene():
    # this function is the main game game_scene
    def show_apple():
        apple.move(random.randint(0 + 
-               2*constants.SNAKE_SIZE,constants.SCREEN_X - 
-               2*constants.SNAKE_SIZE),(random.randint(0 + 
-               2*constants.SNAKE_SIZE,constants.SCREEN_Y - 
-               2*constants.SNAKE_SIZE)))
+               constants.SNAKE_SIZE,constants.SCREEN_X - 
+               constants.SNAKE_SIZE),(random.randint(0 + 
+               constants.SNAKE_SIZE,constants.SCREEN_Y - 
+               constants.SNAKE_SIZE)))
     
    def show_snake(x , y):
         # this function takes a snake from off screen and moves it on screen
@@ -169,7 +169,7 @@ def game_scene():
        snakes.append(a_single_snake)
    #place 1 snake on the screen
    x = constants.SCREEN_X/2
-   y = constants.SCREEN_Y - 32
+   y = constants.SCREEN_Y/2
    show_snake(x, y)
 
    # an apple sprite that will be updated every frame
@@ -278,8 +278,11 @@ def game_scene():
        #Check for off-screen
        if snakes[HEAD].x > (constants.SCREEN_X - constants.SNAKE_SIZE):
            game_over_scene(score)
-       if snakes[HEAD].x <= 0 :
-           game_over_scene(score)
+       for coords in wormCoords:
+           x= coords['x']
+           y= coords['y']
+           if x < 0 :
+               game_over_scene(score)
        if snakes[HEAD].y <  0:
            game_over_scene(score)
        if snakes[HEAD].y > (constants.SCREEN_Y - constants.SNAKE_SIZE):
