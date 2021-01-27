@@ -176,7 +176,8 @@ def game_scene():
    apple = stage.Sprite(image_bank_sprites, 8 , constants.OFF_SCREEN_X,
                                      constants.OFF_SCREEN_Y)
    #place apple on the screen
-   show_apple()
+   apple.move(constants.SCREEN_X/2 + 32,constants.SCREEN_Y/2 -32 ) 
+ 
    # create a stage for the background to show up on
    #   and set the frame rate for 5fps
    game = stage.Stage(ugame.display, 5)
