@@ -167,7 +167,7 @@ def game_scene():
    
    # a snake sprite that will be updated every frame
    snakes = []
-   for snake_number in range(50):
+   for snake_number in range(constants.MAX_SCORE):
        a_single_snake = stage.Sprite(image_bank_sprites, 11, 
                         constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
        snakes.append(a_single_snake)
@@ -191,10 +191,10 @@ def game_scene():
    #   most likely you will only render the background once per game scene
    game.render_block()
    #define initial values for the main loop
-   right_button = "button_up"
-   left_button = "button_up"
-   up_button = "button_up"
-   down_button = "button_up"
+   right_button = constants.button_state["button_up"]
+   left_button = constants.button_state["button_up"]
+   up_button = constants.button_state["button_up"]
+   down_button = constants.button_state["button_up"]
    HEAD = 0
    wormCoords = [{'x': snakes[HEAD].x , 'y': snakes[HEAD].y}]
    newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y}
@@ -206,25 +206,25 @@ def game_scene():
        keys = ugame.buttons.get_pressed()
       
        if keys & ugame.K_RIGHT !=0:
-           right_button = "button_pressed"
-           left_button = "button_up"
-           up_button = "button_up"
-           down_button = "button_up"
+           right_button = constants.button_state["button_just_pressed"]
+           left_button = constants.button_state["button_up"]
+           up_button = constants.button_state["button_up"]
+           down_button = constants.button_state["button_up"]
        elif keys & ugame.K_LEFT !=0:
-           right_button = "button_up"
-           left_button = "button_pressed"
-           up_button = "button_up"
-           down_button = "button_up"
+           right_button = constants.button_state["button_up"]
+           left_button = constants.button_state["button_just_pressed"]
+           up_button = constants.button_state["button_up"]
+           down_button = constants.button_state["button_up"]
        elif keys & ugame.K_UP !=0:
-           right_button = "button_up"
-           left_button = "button_up"
-           up_button = "button_pressed"
-           down_button = "button_up"
+           right_button = constants.button_state["button_up"]
+           left_button = constants.button_state["button_up"]
+           up_button = constants.button_state["button_just_pressed"]
+           down_button = constants.button_state["button_up"]
        elif keys & ugame.K_DOWN !=0:
-           right_button = "button_up"
-           left_button = "button_up"
-           up_button = "button_up"
-           down_button = "button_pressed"
+           right_button = constants.button_state["button_up"]
+           left_button = constants.button_state["button_up"]
+           up_button = constants.button_state["button_up"]
+           down_button = constants.button_state["button_just_pressed"]
 
        if keys & ugame.K_X:
            pass
@@ -271,23 +271,23 @@ def game_scene():
            apple.move(constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
            #place apple in new location
            show_apple()
-           if right_button == "button_pressed" :
+           if right_button == constants.button_state["button_just_pressed"] :
                newHead = {'x':snakes[HEAD].x +16, 'y' :snakes[HEAD].y}
-           elif left_button == "button_pressed" :
+           elif left_button == constants.button_state["button_just_pressed"] :
                newHead = {'x':snakes[HEAD].x - 16, 'y' :snakes[HEAD].y}
-           elif up_button == "button_pressed" :
+           elif up_button == constants.button_state["button_just_pressed"] :
                newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y - 16}
-           elif down_button == "button_pressed" :
+           elif down_button == constants.button_state["button_just_pressed"] :
                newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y + 16}
            wormCoords.insert(0,newHead)
        else:        
-           if right_button == "button_pressed" :
+           if right_button == constants.button_state["button_just_pressed"] :
                newHead = {'x':snakes[HEAD].x +16, 'y' :snakes[HEAD].y}
-           elif left_button == "button_pressed" :
+           elif left_button == constants.button_state["button_just_pressed"] :
                newHead = {'x':snakes[HEAD].x - 16, 'y' :snakes[HEAD].y}
-           elif up_button == "button_pressed" :
+           elif up_button == constants.button_state["button_just_pressed"] :
                newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y - 16}
-           elif down_button == "button_pressed" :
+           elif down_button == constants.button_state["button_just_pressed"] :
                newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y + 16}
            wormCoords.insert(0,newHead)
            del wormCoords[-1]
@@ -338,7 +338,7 @@ def game_scene():
            time.sleep(0.5)
            you_lost_scene(score)      
 
-       if score == 25:
+       if score == constants.MAX_SCORE:
            for i in range(score):
                neopixels[0] = (0, 10, 0)
                neopixels[1] = (0, 10, 0)
