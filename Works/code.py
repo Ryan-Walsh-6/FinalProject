@@ -6,9 +6,8 @@
 
 import ugame
 import stage
-import time
 import random
-import board
+import time
 import supervisor
 
 import constants
@@ -126,15 +125,11 @@ def menu_scene():
 def game_scene():
    # this function is the main game game_scene
    def show_apple():
-        # this function creates an apple and places it on screen
-       for apple_number in range(len(apples)):
-           if apples[apple_number].x < 0:
-               apples[apple_number].move(random.randint(0 + 
+       apple.move(random.randint(0 + 
                2*constants.SNAKE_SIZE,constants.SCREEN_X - 
                2*constants.SNAKE_SIZE),(random.randint(0 + 
                2*constants.SNAKE_SIZE,constants.SCREEN_Y - 
                2*constants.SNAKE_SIZE)))
-               break
     
    def show_snake(x , y):
         # this function takes a snake from off screen and moves it on screen
@@ -143,12 +138,13 @@ def game_scene():
                snakes[snake_number].move(x,y)
                break
    
+   # get sound ready
    apple_crunch = open("apple_crunch.wav", 'rb')
-#   endgame = open("endgame.wav", 'rb')
    sound = ugame.audio
    sound.stop()
    sound.mute(False)
    
+   # for score
    score = 0
 
    score_text = stage.Text(width=29, height=14)
@@ -165,28 +161,27 @@ def game_scene():
    #   and the size (10x8 tiles of the size 16x16)
    background = stage.Grid(image_bank_bankground, 10,8)
    
-   # a sprite that will be updated every frame
+   # a snake sprite that will be updated every frame
    snakes = []
    for snake_number in range(50):
-       a_single_snake = stage.Sprite(image_bank_sprites, 11, constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
+       a_single_snake = stage.Sprite(image_bank_sprites, 11, 
+                        constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
        snakes.append(a_single_snake)
    #place 1 snake on the screen
-   x = constants.SCREEN_X/2 - 8
-   y = constants.SCREEN_Y - 24
+   x = constants.SCREEN_X/2 
+   y = constants.SCREEN_Y - 32
    show_snake(x, y)
 
-   apples = []
-   for apple_number in range(2):
-       a_single_apple = stage.Sprite(image_bank_sprites, 8 , constants.OFF_SCREEN_X,
+   # an apple sprite that will be updated every frame
+   apple = stage.Sprite(image_bank_sprites, 8 , constants.OFF_SCREEN_X,
                                      constants.OFF_SCREEN_Y)
-       apples.append(a_single_apple)
-   #place 1 apple on the screen
+   #place apple on the screen
    show_apple()
    # create a stage for the background to show up on
    #   and set the frame rate for 5fps
    game = stage.Stage(ugame.display, 5)
    # set layers of all sprites, items show up in order
-   game.layers = [score_text] + snakes + apples + [background]
+   game.layers = [score_text] + snakes + [apple] + [background]
    # render all sprites
    #   most likely you will only render the background once per game scene
    game.render_block()
@@ -195,10 +190,10 @@ def game_scene():
    left_button = "button_up"
    up_button = "button_up"
    down_button = "button_up"
-   wormCoords = [{'x': snakes[0].x , 'y': snakes[0].y}]
-   newHead = {'x':snakes[0].x, 'y' :snakes[0].y}
-   HEAD = 0       
-# repeat forever, game loop
+   HEAD = 0
+   wormCoords = [{'x': snakes[HEAD].x , 'y': snakes[HEAD].y}]
+   newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y}
+   # repeat forever, game loop
    while True:
        # get user input
        keys = ugame.buttons.get_pressed()
@@ -233,87 +228,64 @@ def game_scene():
        if keys & ugame.K_SELECT:
            pass
       
-       for snake_number in range(1):
-           if snakes[snake_number].x > 0:
-               for apple_number in range(len(apples)):
-                   if apples[apple_number].x > 0:
-                       if stage.collide(snakes[snake_number].x , 
-                                        snakes[snake_number].y,
-                                        snakes[snake_number].x + 15,
-                                        snakes[snake_number].y + 15,
-                                        apples[apple_number].x ,
-                                        apples[apple_number].y,
-                                        apples[apple_number].x + 15,
-                                        apples[apple_number].y + 15):
-                           sound.stop()
-                           sound.play(apple_crunch)
-                        # you hit an apple
-                           score = score + 1
-                           score_text.clear()
-                           score_text.cursor(0,0)
-                           score_text.move(1,1)
-                           score_text.text("Score: {0}".format(score))
+       if stage.collide(snakes[HEAD].x , snakes[HEAD].y,
+                        snakes[HEAD].x + 15, snakes[HEAD].y + 15, 
+                        apple.x + 1 , apple.y + 1,
+                        apple.x + 14, apple.y + 14):
+           sound.stop()
+           sound.play(apple_crunch)
+           # you hit an apple
+           score = score + 1
+           score_text.clear()
+           score_text.cursor(0,0)
+           score_text.move(1,1)
+           score_text.text("Score: {0}".format(score))
 
-                           apples[apple_number].move(constants.OFF_SCREEN_X,
-                                                  constants.OFF_SCREEN_Y)
-                           show_apple()
-                           if right_button == "button_pressed" :
-                               newHead = {'x':snakes[0].x +16, 'y' :snakes[0].y}
-                               wormCoords.insert(0,newHead)
-                           elif left_button == "button_pressed" :
-                               newHead = {'x':snakes[0].x - 16, 'y' :snakes[0].y}
-                               wormCoords.insert(0,newHead)
-                           elif up_button == "button_pressed" :
-                               newHead = {'x':snakes[0].x, 'y' :snakes[0].y - 16}
-                               wormCoords.insert(0,newHead)
-                           elif down_button == "button_pressed" :
-                               newHead = {'x':snakes[0].x, 'y' :snakes[0].y + 16}
-                               wormCoords.insert(0,newHead)
-                       else:        
-                           if right_button == "button_pressed" :
-                               newHead = {'x':snakes[0].x +16, 'y' :snakes[0].y}
-                               wormCoords.insert(0,newHead)
-                               del wormCoords[-1]
-                           elif left_button == "button_pressed" :
-                               newHead = {'x':snakes[0].x - 16, 'y' :snakes[0].y}
-                               wormCoords.insert(0,newHead)
-                               del wormCoords[-1]
-                           elif up_button == "button_pressed" :
-                               newHead = {'x':snakes[0].x, 'y' :snakes[0].y - 16}
-                               wormCoords.insert(0,newHead)
-                               del wormCoords[-1]
-                           elif down_button == "button_pressed" :
-                               newHead = {'x':snakes[0].x, 'y' :snakes[0].y + 16}
-                               wormCoords.insert(0,newHead)
-                               del wormCoords[-1]
+           apple.move(constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
+           #place apple in new location
+           show_apple()
+           if right_button == "button_pressed" :
+               newHead = {'x':snakes[HEAD].x +16, 'y' :snakes[HEAD].y}
+           elif left_button == "button_pressed" :
+               newHead = {'x':snakes[HEAD].x - 16, 'y' :snakes[HEAD].y}
+           elif up_button == "button_pressed" :
+               newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y - 16}
+           elif down_button == "button_pressed" :
+               newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y + 16}
+           wormCoords.insert(0,newHead)
+       else:        
+           if right_button == "button_pressed" :
+               newHead = {'x':snakes[HEAD].x +16, 'y' :snakes[HEAD].y}
+           elif left_button == "button_pressed" :
+               newHead = {'x':snakes[HEAD].x - 16, 'y' :snakes[HEAD].y}
+           elif up_button == "button_pressed" :
+               newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y - 16}
+           elif down_button == "button_pressed" :
+               newHead = {'x':snakes[HEAD].x, 'y' :snakes[HEAD].y + 16}
+           wormCoords.insert(0,newHead)
+           del wormCoords[-1]
        
+       #Move all snakes off screen
        for snake_number in range (len(snakes)):
-           if snakes[snake_number].x > 0:
-               snakes[snake_number].move(constants.OFF_SCREEN_X,
-                                               constants.OFF_SCREEN_Y)
+           snakes[snake_number].move(constants.OFF_SCREEN_X,
+                                     constants.OFF_SCREEN_Y)
+       #Re-draw snake
        for coords in wormCoords:
            x= coords['x']
            y= coords['y']
            show_snake(x,y)
 
-
+       #Check for off-screen
        if snakes[HEAD].x > (constants.SCREEN_X - constants.SNAKE_SIZE):
-#           sound.stop()
-#           sound.play(endgame)
            game_over_scene(score)
        if snakes[HEAD].x  < 0:
-#           sound.stop()
-#           sound.play(endgame)
            game_over_scene(score)
        if snakes[HEAD].y <  0:
-#           sound.stop()
-#           sound.play(endgame)
            game_over_scene(score)
-       if snakes[HEAD].y > (constants.SCREEN_Y):
-#sound.stop()
- #          sound.play(endgame)
+       if snakes[HEAD].y > (constants.SCREEN_Y - constants.SNAKE_SIZE):
            game_over_scene(score)
        
+       #Check for the snake collision with itself
        for snake_number in range (1,len(snakes)):
            if snakes[snake_number].x > 0:
                        if stage.collide(snakes[HEAD].x , 
@@ -324,12 +296,10 @@ def game_scene():
                                         snakes[snake_number].y,
                                         snakes[snake_number].x + 15,
                                         snakes[snake_number].y + 15):
- #                          sound.stop()
- #                          sound.play(endgame)
                            game_over_scene(score)
-                           
+
        # redraw Sprite
-       game.render_sprites(snakes + apples)
+       game.render_sprites(snakes + [apple])
        game.tick() # wait until refresh rate finishes
 
 def game_over_scene(final_score):
