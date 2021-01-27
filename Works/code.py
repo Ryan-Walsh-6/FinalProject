@@ -168,7 +168,7 @@ def game_scene():
                         constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
        snakes.append(a_single_snake)
    #place 1 snake on the screen
-   x = constants.SCREEN_X/2 
+   x = constants.SCREEN_X/2
    y = constants.SCREEN_Y - 32
    show_snake(x, y)
 
@@ -230,8 +230,8 @@ def game_scene():
       
        if stage.collide(snakes[HEAD].x , snakes[HEAD].y,
                         snakes[HEAD].x + 15, snakes[HEAD].y + 15, 
-                        apple.x + 1 , apple.y + 1,
-                        apple.x + 14, apple.y + 14):
+                        apple.x, apple.y,
+                        apple.x + 15, apple.y + 15):
            sound.stop()
            sound.play(apple_crunch)
            # you hit an apple
@@ -278,7 +278,7 @@ def game_scene():
        #Check for off-screen
        if snakes[HEAD].x > (constants.SCREEN_X - constants.SNAKE_SIZE):
            game_over_scene(score)
-       if snakes[HEAD].x  < 0:
+       if snakes[HEAD].x <= 0 :
            game_over_scene(score)
        if snakes[HEAD].y <  0:
            game_over_scene(score)
