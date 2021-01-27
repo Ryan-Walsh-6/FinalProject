@@ -8,6 +8,8 @@ import ugame
 import stage
 import random
 import time
+import neopixel
+import board
 import supervisor
 
 import constants
@@ -144,6 +146,8 @@ def game_scene():
    sound.stop()
    sound.mute(False)
    
+   neopixels = neopixel.NeoPixel(board.NEOPIXEL, constants.NEOPIXEL_COUNT, 
+                                 auto_write=False)
    # for score
    score = 0
 
@@ -228,11 +232,119 @@ def game_scene():
            pass
        if keys & ugame.K_SELECT:
            pass
-      
+        #set neopixels to green by default
+       neopixels[0] = (0, 0, 10)
+       neopixels[1] = (0, 0, 10)
+       neopixels[2] = (0, 0, 10)
+       neopixels[3] = (0, 0, 10)
+       neopixels[4] = (0, 0, 10) 
+       neopixels.show()
        if stage.collide(snakes[HEAD].x , snakes[HEAD].y,
                         snakes[HEAD].x + 15, snakes[HEAD].y + 15, 
                         apple.x, apple.y,
                         apple.x + 15, apple.y + 15):
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (10, 10, 0)
+           neopixels[1] = (10, 10, 0)
+           neopixels[2] = (10, 10, 0)
+           neopixels[3] = (10, 10, 0)
+           neopixels[4] = (10, 10, 0)
+           neopixels.show()
+           neopixels[0] = (0, 0, 10)
+           neopixels[1] = (0, 0, 10)
+           neopixels[2] = (0, 0, 10)
+           neopixels[3] = (0, 0, 10)
+           neopixels[4] = (0, 0, 10)
+           neopixels.show()
            sound.stop()
            sound.play(apple_crunch)
            # you hit an apple
@@ -278,16 +390,44 @@ def game_scene():
 
        #Check for off-screen
        if snakes[HEAD].x > (constants.SCREEN_X - constants.SNAKE_SIZE):
-           game_over_scene(score)
+           neopixels[0] = (10, 0, 0)
+           neopixels[1] = (10, 0, 0)
+           neopixels[2] = (10, 0, 0)
+           neopixels[3] = (10, 0, 0)
+           neopixels[4] = (10, 0, 0)
+           neopixels.show()
+           time.sleep(2.0)
+           you_lost_scene(score)
        for coords in wormCoords:
            x= coords['x']
            y= coords['y']
            if x < 0 :
-               game_over_scene(score)
+               neopixels[0] = (10, 0, 0)
+               neopixels[1] = (10, 0, 0)
+               neopixels[2] = (10, 0, 0)
+               neopixels[3] = (10, 0, 0)
+               neopixels[4] = (10, 0, 0)
+               neopixels.show()
+               time.sleep(2.0)
+               you_lost_scene(score)
        if snakes[HEAD].y <  0:
-           game_over_scene(score)
+           neopixels[0] = (10, 0, 0)
+           neopixels[1] = (10, 0, 0)
+           neopixels[2] = (10, 0, 0)
+           neopixels[3] = (10, 0, 0)
+           neopixels[4] = (10, 0, 0)
+           neopixels.show()
+           time.sleep(2.0)
+           you_lost_scene(score)
        if snakes[HEAD].y > (constants.SCREEN_Y - constants.SNAKE_SIZE):
-           game_over_scene(score)
+           neopixels[0] = (10, 0, 0)
+           neopixels[1] = (10, 0, 0)
+           neopixels[2] = (10, 0, 0)
+           neopixels[3] = (10, 0, 0)
+           neopixels[4] = (10, 0, 0)
+           neopixels.show()
+           time.sleep(2.0)
+           you_lost_scene(score)
        
        #Check for the snake collision with itself
        for snake_number in range (1,len(snakes)):
@@ -300,11 +440,83 @@ def game_scene():
                                         snakes[snake_number].y,
                                         snakes[snake_number].x + 15,
                                         snakes[snake_number].y + 15):
-                           game_over_scene(score)
-
+                           neopixels[0] = (10, 0, 0)
+                           neopixels[1] = (10, 0, 0)
+                           neopixels[2] = (10, 0, 0)
+                           neopixels[3] = (10, 0, 0)
+                           neopixels[4] = (10, 0, 0)
+                           neopixels.show()
+                           time.sleep(2.0)
+                           you_lost_scene(score)
+       if score == 50:
+           neopixels[0] = (0, 10, 0)
+           neopixels[1] = (0, 10, 0)
+           neopixels[2] = (0, 10, 0)
+           neopixels[3] = (0, 10, 0)
+           neopixels[4] = (0, 10, 0)
+           neopixels.show()
+           you_won_scene(score)
        # redraw Sprite
        game.render_sprites(snakes + [apple])
        game.tick() # wait until refresh rate finishes
+
+def you_won_scene(score):
+    # turn off sound from last scene
+   sound = ugame.audio
+   sound.stop()
+   # image banks for Circuitpython
+   image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
+           
+   # sets the background to image 0 in the image bank
+   background = stage.Grid(image_bank_2, constants.SCREEN_GRID_X,
+                                    constants.SCREEN_GRID_Y)
+    
+   text = []
+   text1 = stage.Text(width=29, height=14, font=None,
+   palette=constants.BLUE_PALETTE, buffer=None)
+   text1.move(43,60)
+   text1.text("YOU WIN!")
+   text.append(text1)
+
+   # create a stage for the background to show up on
+   #     ad set the frame rate to 60fps
+   game = stage.Stage(ugame.display, constants.FPS)
+   # set layers of all sprites, items show up in order
+   game.layers = text + [background]
+   # render all sprites
+   #   most likely you will only render the background once per game scene
+   game.render_block()
+   time.sleep(3.0)
+   game_over_scene(score)
+
+def you_lost_scene(score):
+    # turn off sound from last scene
+   sound = ugame.audio
+   sound.stop()
+   # image banks for Circuitpython
+   image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
+           
+   # sets the background to image 0 in the image bank
+   background = stage.Grid(image_bank_2, constants.SCREEN_GRID_X,
+                                    constants.SCREEN_GRID_Y)
+    
+   text = []
+   text1 = stage.Text(width=29, height=14, font=None,
+   palette=constants.BLUE_PALETTE, buffer=None)
+   text1.move(43,60)
+   text1.text("YOU LOST:(")
+   text.append(text1)
+
+   # create a stage for the background to show up on
+   #     ad set the frame rate to 60fps
+   game = stage.Stage(ugame.display, constants.FPS)
+   # set layers of all sprites, items show up in order
+   game.layers = text + [background]
+   # render all sprites
+   #   most likely you will only render the background once per game scene
+   game.render_block()
+   time.sleep(3.0)
+   game_over_scene(score)
 
 def game_over_scene(final_score):
      # this function is the game over scene
