@@ -14,7 +14,7 @@ import supervisor
 import constants
 
 def splash_scene():
-    # this function is the menu scene
+    # this function is the splash scene
 
     # get sound ready
     coin_sound = open("coin.wav", 'rb')
@@ -124,8 +124,9 @@ def menu_scene():
         game.tick() # wait until refresh rate finishes
 
 def game_scene():
+   # this function is the main game game_scene
    def show_apple():
-        # this function takes an alien from off screen and moves it on screen
+        # this function creates an apple and places it on screen
        for apple_number in range(len(apples)):
            if apples[apple_number].x < 0:
                apples[apple_number].move(random.randint(0 + 
@@ -143,7 +144,7 @@ def game_scene():
                break
    
    apple_crunch = open("apple_crunch.wav", 'rb')
- #  endgame = open("endgame.wav", 'rb')
+#   endgame = open("endgame.wav", 'rb')
    sound = ugame.audio
    sound.stop()
    sound.mute(False)
@@ -155,10 +156,7 @@ def game_scene():
    score_text.cursor(0,0)
    score_text.move(1,1)
    score_text.text("Score: {0}".format(score))
-    # this function is the main game game_scene
-   
- 
-
+    
    # image banks for CircuitPython
    image_bank_bankground = stage.Bank.from_bmp16("ball.bmp")
    image_bank_sprites = stage.Bank.from_bmp16("PyBadge_bank_color_template.bmp")
@@ -172,27 +170,27 @@ def game_scene():
    for snake_number in range(50):
        a_single_snake = stage.Sprite(image_bank_sprites, 11, constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
        snakes.append(a_single_snake)
-   #place 1 alien on the screen
-   x = 75
-   y = 66
+   #place 1 snake on the screen
+   x = constants.SCREEN_X/2 - 8
+   y = constants.SCREEN_Y - 24
    show_snake(x, y)
 
- #  snake = stage.Sprite(image_bank_sprites, 11, 75, 66)
    apples = []
    for apple_number in range(2):
        a_single_apple = stage.Sprite(image_bank_sprites, 8 , constants.OFF_SCREEN_X,
                                      constants.OFF_SCREEN_Y)
        apples.append(a_single_apple)
+   #place 1 apple on the screen
    show_apple()
    # create a stage for the background to show up on
-   #   and set the frame rate for 60fps
+   #   and set the frame rate for 5fps
    game = stage.Stage(ugame.display, 5)
    # set layers of all sprites, items show up in order
    game.layers = [score_text] + snakes + apples + [background]
    # render all sprites
    #   most likely you will only render the background once per game scene
    game.render_block()
-   
+   #define initial values for the main loop
    right_button = "button_up"
    left_button = "button_up"
    up_button = "button_up"
@@ -249,7 +247,7 @@ def game_scene():
                                         apples[apple_number].y + 15):
                            sound.stop()
                            sound.play(apple_crunch)
-                        # you hit an alien
+                        # you hit an apple
                            score = score + 1
                            score_text.clear()
                            score_text.cursor(0,0)
@@ -298,22 +296,21 @@ def game_scene():
            y= coords['y']
            show_snake(x,y)
 
- #      for snake_number in range (len(snakes)):
- #          if snakes[snake_number].x > 0:
+
        if snakes[HEAD].x > (constants.SCREEN_X - constants.SNAKE_SIZE):
-           sound.stop()
- #          sound.play(endgame)
+#           sound.stop()
+#           sound.play(endgame)
            game_over_scene(score)
        if snakes[HEAD].x  < 0:
-           sound.stop()
- #          sound.play(endgame)
+#           sound.stop()
+#           sound.play(endgame)
            game_over_scene(score)
        if snakes[HEAD].y <  0:
-           sound.stop()
- #          sound.play(endgame)
+#           sound.stop()
+#           sound.play(endgame)
            game_over_scene(score)
        if snakes[HEAD].y > (constants.SCREEN_Y):
-           sound.stop()
+#sound.stop()
  #          sound.play(endgame)
            game_over_scene(score)
        
@@ -327,7 +324,7 @@ def game_scene():
                                         snakes[snake_number].y,
                                         snakes[snake_number].x + 15,
                                         snakes[snake_number].y + 15):
-                           sound.stop()
+ #                          sound.stop()
  #                          sound.play(endgame)
                            game_over_scene(score)
                            
